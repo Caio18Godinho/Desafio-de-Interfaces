@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Tonalis – Tintas que você entende</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+    <style>
+        :root {
+            --bg: #FAFAF7;
+            --surface: #fff;
+            --text: #1A1F2B;
+            --muted: #46506a;
+            --primary: #0B3C6F;
+            --on-primary: #fff;
+            --accent: #E69F00;
+            --on-accent: #1A1F2B;
+            --border: #8A93A6;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #10141C;
+                --surface: #1A2030;
+                --text: #F2F4F8;
+                --muted: #B8C0D4;
+                --primary: #8EC5FF;
+                --on-primary: #10141C;
+                --border: #7C86A0
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #10141C;
+            --surface: #1A2030;
+            --text: #F2F4F8;
+            --muted: #B8C0D4;
+            --primary: #8EC5FF;
+            --on-primary: #10141C;
+            --border: #7C86A0
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 400 1.125rem/1.6 "Atkinson Hyperlegible", Verdana, Arial, sans-serif
+        }
+
+        a,
+        button,
+        select,
+        input {
+            font: inherit;
+            color: inherit
+        }
+
+        :focus-visible {
+            outline: 4px solid var(--accent);
+            outline-offset: 3px
+        }
+
+        .skip {
+            position: absolute;
+            left: -999px;
+            background: var(--accent);
+            color: var(--on-accent);
+            padding: .75rem 1rem;
+            z-index: 20
+        }
+
+        .skip:focus {
+            left: 1rem;
+            top: 1rem
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.25rem
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border)
+        }
+
+        .bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            text-decoration: none;
+            color: var(--primary);
+            display: flex;
+            gap: .5rem;
+            align-items: center
+        }
+
+        nav ul {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        nav a {
+            display: block;
+            padding: .75rem 1rem;
+            min-height: 48px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px
+        }
+
+        .btn {
+            display: inline-block;
+            min-height: 48px;
+            padding: .75rem 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+            background: var(--primary);
+            color: var(--on-primary);
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer
+        }
+
+        .btn.alt {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--on-accent)
+        }
+
+        .hero {
+            padding: 3rem 0 2rem;
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr;
+            align-items: center
+        }
+
+        @media(min-width:800px) {
+            .hero {
+                grid-template-columns: 1.2fr 1fr
+            }
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.15;
+            margin: 0 0 1rem
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: 0 0 .5rem
+        }
+
+        .lead {
+            color: var(--muted);
+            max-width: 55ch
+        }
+
+        .search {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0 .5rem
+        }
+
+        .search input {
+            flex: 1 1 240px;
+            min-height: 52px;
+            padding: .5rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface)
+        }
+
+        label {
+            font-weight: 700;
+            display: block;
+            margin-bottom: .25rem
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 1rem;
+            margin: 0
+        }
+
+        .demo {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem
+        }
+
+        .demo .row {
+            display: flex;
+            gap: .75rem;
+            margin-top: .75rem
+        }
+
+        .sw {
+            flex: 1;
+            min-height: 90px;
+            border-radius: 10px;
+            border: 2px solid var(--text);
+            display: flex;
+            align-items: flex-end;
+            padding: .5rem;
+            font-weight: 700;
+            font-size: 1rem
+        }
+
+        section {
+            padding: 2rem 0
+        }
+
+        .tools {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0 1.5rem
+        }
+
+        .tools div {
+            flex: 1 1 200px
+        }
+
+        select {
+            width: 100%;
+            min-height: 48px;
+            padding: .5rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface)
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+
+        .card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden
+        }
+
+        .card .chip {
+            height: 120px;
+            border-bottom: 2px solid var(--border)
+        }
+
+        .card .body {
+            padding: 1rem
+        }
+
+        .card h3 {
+            margin: 0 0 .25rem;
+            font-size: 1.25rem
+        }
+
+        dl {
+            margin: .5rem 0 1rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: .15rem .75rem;
+            font-size: 1rem
+        }
+
+        dt {
+            color: var(--muted)
+        }
+
+        dd {
+            margin: 0;
+            font-weight: 700
+        }
+
+        .steps {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            list-style: none;
+            padding: 0;
+            counter-reset: s
+        }
+
+        .steps li {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem;
+            counter-increment: s
+        }
+
+        .steps li::before {
+            content: counter(s);
+            display: inline-grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--on-primary);
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        footer {
+            border-top: 2px solid var(--border);
+            padding: 2rem 0;
+            color: var(--muted)
+        }
+
+        #empty {
+            display: none;
+            font-weight: 700
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <filter id="protanopia">
+            <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0" />
+        </filter>
+        <filter id="deuteranopia">
+            <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0" />
+        </filter>
+        <filter id="tritanopia">
+            <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0" />
+        </filter>
+    </svg>
+    <a class="skip" href="#catalogo">Pular para o catálogo</a>
+    <header>
+        <div class="wrap bar">
+            <a class="logo" href="#" aria-label="Tonalis, página inicial">
+                <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+                    <rect x="2" y="2" width="32" height="32" rx="8" fill="currentColor" />
+                    <path d="M8 8h20v20z" fill="#E69F00" />
+                </svg>Tonalis</a>
+            <nav aria-label="Principal">
+                <ul>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#como">Como funciona</a></li>
+                    <li><a href="#contato">Atendimento</a></li>
+                    <li><a href="#" class="btn">Carrinho (0)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main id="main">
+        <div class="wrap">
+            <div class="hero">
+                <div>
+                    <h1>Escolha tintas pelo nome da cor, não só pelo que você enxerga.</h1>
+                    <p class="lead">Na Tonalis, cada tinta tem nome claro, família, nível de claridade e código. Você
+                        compra com segurança, sem depender de ajuda de outra pessoa.</p>
+                    <form class="search" role="search" onsubmit="return false">
+                        <div style="flex:1 1 100%"><label for="q">Buscar tinta por nome ou família</label></div>
+                        <input id="q" type="search" placeholder="Ex.: verde musgo, azul claro" autocomplete="off">
+                        <button class="btn alt" type="button"
+                            onclick="document.getElementById('catalogo').scrollIntoView()">Buscar</button>
+                    </form>
+                    <p class="hint">Cores sempre acompanhadas de texto. Nenhuma informação depende só da cor.</p>
+                </div>
+                <aside class="demo" aria-label="Exemplo de como mostramos as cores">
+                    <h2 style="font-size:1.25rem">Exemplo: dois tons que se confundem</h2>
+                    <p class="hint">Vermelho e verde parecem iguais para muitos daltônicos. Aqui eles vêm identificados:
+                    </p>
+                    <div class="row">
+                        <div class="sw" style="background:#B5483B;color:#fff"><span>Vermelho telha<br>Médio</span></div>
+                        <div class="sw" style="background:#6B7F3A;color:#fff"><span>Verde oliva<br>Médio</span></div>
+                    </div>
+                </aside>
+            </div>
+
+            <section id="catalogo" aria-labelledby="t-cat">
+                <h2 id="t-cat">Catálogo de tintas</h2>
+                <div class="tools">
+                    <div><label for="fam">Família de cor</label>
+                        <select id="fam">
+                            <option value="">Todas</option>
+                            <option>Vermelhos e laranjas</option>
+                            <option>Amarelos</option>
+                            <option>Verdes</option>
+                            <option>Azuis</option>
+                            <option>Roxos e rosas</option>
+                            <option>Neutros</option>
+                        </select>
+                    </div>
+                    <div><label for="tom">Claridade</label>
+                        <select id="tom">
+                            <option value="">Todas</option>
+                            <option>Claro</option>
+                            <option>Médio</option>
+                            <option>Escuro</option>
+                        </select>
+                    </div>
+                    <div><label for="sim">Ver como (simulação)</label>
+                        <select id="sim">
+                            <option value="">Visão típica</option>
+                            <option value="protanopia">Protanopia</option>
+                            <option value="deuteranopia">Deuteranopia</option>
+                            <option value="tritanopia">Tritanopia</option>
+                        </select>
+                    </div>
+                </div>
+                <p id="count" class="hint" role="status" aria-live="polite"></p>
+                <ul class="grid" id="grid"></ul>
+                <p id="empty">Nenhuma tinta encontrada. Tente outro nome ou limpe os filtros.</p>
+            </section>
+
+            <section id="como" aria-labelledby="t-como">
+                <h2 id="t-como">Como funciona</h2>
+                <ol class="steps">
+                    <li>
+                        <h3>Busque pelo nome</h3>
+                        <p>Pesquise por nome, família ou claridade, sem depender de enxergar a diferença entre tons.</p>
+                    </li>
+                    <li>
+                        <h3>Confira os detalhes</h3>
+                        <p>Cada tinta mostra nome, família, claridade e código hexadecimal em texto.</p>
+                    </li>
+                    <li>
+                        <h3>Compare com segurança</h3>
+                        <p>Use o simulador para ver como a cor aparece em diferentes tipos de daltonismo.</p>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </main>
+    <footer id="contato">
+        <div class="wrap">
+            <p><strong>Atendimento Tonalis</strong> · Seg a sex, 9h às 18h · contato@tonalis.example</p>
+            <p class="hint">Site fictício criado para o Desafio de Interface – SPTech.</p>
+        </div>
+    </footer>
+    <script>
+        var P = [["Vermelho telha", "Vermelhos e laranjas", "Médio", "#B5483B"], ["Laranja cenoura", "Vermelhos e laranjas", "Médio", "#E07B1A"], ["Pêssego suave", "Vermelhos e laranjas", "Claro", "#F6C9A8"], ["Amarelo girassol", "Amarelos", "Claro", "#F2C230"], ["Mostarda", "Amarelos", "Escuro", "#A97F10"], ["Verde oliva", "Verdes", "Médio", "#6B7F3A"], ["Verde menta", "Verdes", "Claro", "#B7E4C7"], ["Verde floresta", "Verdes", "Escuro", "#1F4D36"], ["Azul céu", "Azuis", "Claro", "#9CCBF0"], ["Azul royal", "Azuis", "Médio", "#2C5FB3"], ["Azul marinho", "Azuis", "Escuro", "#0B2447"], ["Lilás", "Roxos e rosas", "Claro", "#CDB4DB"], ["Roxo ameixa", "Roxos e rosas", "Escuro", "#4A1F4F"], ["Rosa antigo", "Roxos e rosas", "Médio", "#C77A8C"], ["Cinza névoa", "Neutros", "Claro", "#D5D8DE"], ["Grafite", "Neutros", "Escuro", "#2E323B"]];
+        var g = document.getElementById("grid"), q = document.getElementById("q"), f = document.getElementById("fam"), t = document.getElementById("tom"), s = document.getElementById("sim");
+        function norm(x) { return x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") }
+        function render() {
+            var n = 0, h = "", term = norm(q.value);
+            P.forEach(function (p) {
+                if (f.value && p[1] !== f.value) return; if (t.value && p[2] !== t.value) return;
+                if (term && norm(p.join(" ")).indexOf(term) < 0) return;
+                n++;
+                h += '<li class="card"><div class="chip" style="background:' + p[3] + ';' + (s.value ? 'filter:url(#' + s.value + ')' : '') + '" role="img" aria-label="Amostra da cor ' + p[0] + '"></div><div class="body"><h3>' + p[0] + '</h3><dl><dt>Família</dt><dd>' + p[1] + '</dd><dt>Claridade</dt><dd>' + p[2] + '</dd><dt>Código</dt><dd>' + p[3] + '</dd></dl><button class="btn" type="button" aria-label="Adicionar ' + p[0] + ' ao carrinho">Adicionar</button></div></li>';
+            });
+            g.innerHTML = h;
+            document.getElementById("count").textContent = n + (n === 1 ? " tinta encontrada" : " tintas encontradas");
+            document.getElementById("empty").style.display = n ? "none" : "block";
+        }
+        [q, f, t, s].forEach(function (e) { e.addEventListener("input", render) });
+        render();
+    </script>
+</body>
+
+</html>
